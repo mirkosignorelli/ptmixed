@@ -1,1 +1,5 @@
 Code for simulations A and B (Section 3.1 of manuscript)
+
+Before running these simulations, create the following subdirectories in your working directory:
+- data
+- results, with subfolder: full_results
