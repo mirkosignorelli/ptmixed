@@ -1,1 +1,5 @@
 Code for simulations C and D (Section 3.2 of manuscript)
+
+Before running these simulations, create the following subdirectories in your working directory:
+- data, with subfolders 1 and 2
+- results, with subfolders 1.
