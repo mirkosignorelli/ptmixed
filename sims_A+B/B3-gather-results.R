@@ -2,12 +2,11 @@
 ###### Gather results in sim. B ######
 ## (once all computations are done) ##
 ######################################
-
+library(ptmixed)
 case = 1 # 1 to 5
 subcase = 1 # 1 to 3
 
 nrep = 1000
-library(ptmixed)
 b.hat = matrix(NA, nrow = nrep, ncol = 3)
 a.hat = D.hat = s.hat = rep(NA, nrep)
 lik.h1 = lik.h0 = rep(NA, nrep)

@@ -1,5 +1,3 @@
-library(matrixcalc)
-
 case = 6 # 6 to 10
 subcase = 1 # 1 to 3
 
@@ -38,4 +36,3 @@ type1e(p.wald, alpha = 0.05)
 
 # LRT type 1 error
 type1e(p.lrt, alpha = 0.05)
-

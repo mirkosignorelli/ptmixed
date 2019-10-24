@@ -1,5 +1,3 @@
-library(matrixcalc)
-
 case = 1 # 1 to 5
 subcase = 1 # 1 to 3
 
