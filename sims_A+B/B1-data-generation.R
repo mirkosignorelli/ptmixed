@@ -2,7 +2,6 @@
 ##### Data generation in sim. B ######
 ######### (group effect = 0) #########
 ######################################
-
 library(tweeDEseq)
 set.seed(123)
 
