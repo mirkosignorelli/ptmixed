@@ -19,13 +19,15 @@ load(paste('data/data-', case, '-', subcase, '.RData', sep = ''))
 y = data[,nsub]
 df = data.frame(y, group, time)
 
-mixed.model = try( ptmixed(y ~ group + time, id = id, time = time, data = df, npoints = 20,
-        hessian = T, trace = T, theta.start = NULL) )
+mixed.model = try( 
+  ptmixed(y ~ group + time, id = id, 
+          data = df, npoints = 20) )
 
 if (!inherits(mixed.model, 'try-error')) {
   if (mixed.model$convergence == 0) {
-    null.model = try( ptmixed(y ~ time, id = id, time = time, data = df, npoints = 20,
-                         hessian = T, trace = T, theta.start = NULL) )
+    null.model = try( 
+      ptmixed(y ~ time, id = id, 
+              data = df, npoints = 20) )
   }
 }
 
