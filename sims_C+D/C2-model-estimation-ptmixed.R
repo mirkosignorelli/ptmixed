@@ -1,7 +1,6 @@
 ######################################
 ##### Model estimation in sim. C #####
 ######################################
-
 # load R package
 library(ptmixed)
 
@@ -21,13 +20,15 @@ for (h in 1:nrep) {
   data.long <- data.frame(id = id, group = group, time = time, y = y, log.offset = log.offset)
   
   # estimate full model
-  mixed.model = try( ptmixed(y ~ group + time, id = id, time = time, data = data.long, npoints = 20,
-                             hessian = T, trace = T, theta.start = NULL) )
+  mixed.model = try( 
+    ptmixed(y ~ group + time, id = id, 
+            data = data.long, npoints = 20) )
 
   # estimate model under the null that time = 0
   if (mixed.model$convergence == 0) {
-    null.model = try( ptmixed(y ~ group, id = id, time = time, data = data.long, npoints = 20,
-                              hessian = T, trace = T, theta.start = NULL) )
+    null.model = try( 
+      ptmixed(y ~ group, id = id, 
+              data = data.long, npoints = 20) )
   }
   
   # save data:

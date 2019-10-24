@@ -1,5 +1,5 @@
 ######################################
-##### Data generation in sim. C ######
+##### Data generation for sim. C #####
 ######################################
 library(tweeDEseq)
 

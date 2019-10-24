@@ -1,5 +1,5 @@
 ######################################
-##### Data generation in sim. D ######
+##### Data generation for sim. D #####
 ######################################
 library(tweeDEseq)
 

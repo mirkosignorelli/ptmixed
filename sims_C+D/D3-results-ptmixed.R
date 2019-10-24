@@ -32,7 +32,8 @@ for (h in 1:nrep) {
       if (!inherits(mixed.model, 'try-error')){
         beta.hat[ind] = mixed.model$mle[3]
         if (mixed.model$convergence == 0) {
-          p.wald[ind] = summary(mixed.model)$coefficients[3, 4]
+          temp = try(summary(mixed.model))
+          if (!inherits(temp, 'try-error')) p.wald[ind] = temp$coefficients[3, 4]
           logl.h1 = mixed.model$logl
           if (exists('null.model')) {
             if (!inherits(null.model, 'try-error')){
