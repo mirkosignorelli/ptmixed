@@ -1,38 +1,59 @@
 ######################################
 ##### Model estimation in sim. C #####
 ######################################
-# load R package
 library(ptmixed)
+library(peakRAM)
 
-# set case nsub (this can be trivially parallelized)
-case = 1 # 1 to 3 (n = 10, 20, 40)
-nsub = 1 # 1 to 500 (number of simulated genes)
+# set progressive gene id, 1 to 500 
+# (run this parallelizing to obtain results faster)
+nsub = 1
 
-# repeat each 10 times:
-nrep = 10
+cat('simulation number', nsub, '\n') # simulation number
 
-for (h in 1:nrep) {
-  cat(paste('Model estimation, replicate number', h)); cat('\n')
-  
-  # prepare data
-  load(paste('data/C/1-data-case-', case, '-nrep-', h, '.RData', sep = ''))
-  y = data[,nsub]
-  data.long <- data.frame(id = id, group = group, time = time, y = y, log.offset = log.offset)
-  
-  # estimate full model
-  mixed.model = try( 
-    ptmixed(y ~ group + time, id = id, 
-            data = data.long, npoints = 20) )
+nrep = 50
+n.agh = 5
 
-  # estimate model under the null that time = 0
-  if (mixed.model$convergence == 0) {
-    null.model = try( 
-      ptmixed(y ~ group, id = id, 
-              data = data.long, npoints = 20) )
+for (case in 1:3) {
+  print('***************************')
+  print(paste('Case number', case))
+  print('***************************')
+  for (h in 1:nrep) {
+    print(paste('*** Repetition number', h, '***'))
+    load(paste('data/1/1-data-case-', case, '-nrep-', h, '.RData', sep = ''))
+    
+    y = data[,nsub]
+    data.long = data.frame(id = id, group = group, 
+                time = time, y = y, log.offset = log.offset)
+    
+    # estimate full model
+    max.ram = peakRAM(
+      t.comp <- system.time( mixed.model <- try( 
+        ptmixed(y ~ group + time, id = id, trace = F,
+                data = data.long, npoints = n.agh) ) )
+    )
+    
+    # estimate model under the null that time = 0
+    if (!inherits(mixed.model, 'try-error')) {
+      if (mixed.model$convergence == 0) {
+        null.model = try( 
+          ptmixed(y ~ group, id = id, trace = F, hessian = F,
+                  data = data.long, npoints = n.agh) )
+      }
+    }
+    
+    # save data:
+    filename = paste('results/1.2.', case, '/1.2.', 
+                     case, '-', nsub,'-rep-', h, '.RData', sep='')
+    if (exists('null.model')) {
+      save(t.comp, max.ram, mixed.model, null.model, 
+           file = filename)
+    }
+    if (!exists('null.model')) {
+      save(t.comp, max.ram, mixed.model, file = filename)
+    }
+    if (exists('mixed.model')) rm(mixed.model)
+    if (exists('null.model')) rm(null.model)
+    rm(data.long)
   }
-  
-  # save data:
-  save.image( paste('results/C', case, '/1.', case, '-', nsub,'-rep-', h, '.RData', sep='') )
-  if (exists('mixed.model')) rm(mixed.model)
-  if (exists('null.model')) rm(null.model)
 }
+

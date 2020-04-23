@@ -3,56 +3,48 @@
 ######################################
 library(ptmixed)
 case = 1 # 1 to 3
-nrep = 10
-ngenes = 500
-rmse = fpr.wald = fpr.lrt = tpr.wald = tpr.lrt = rep(NA, nrep)
+nrep = 50
 
-get.rmse = function(est, true) {
-  rem = which(is.na(est))
-  if (length(rem) > 0) {est = est[-rem]; true = true[-rem]}
-  out = sqrt( sum((est-true)^2) / length(est) )
-  return(out)
-}
-get.fpr = function(x, alpha) {
-  n = length(which(!is.na(x) & !is.nan(x)))
-  cov = length(which(x<alpha))/n
-  return(cov)
-}
-get.tpr = function(x, alpha) {
-  n = length(which(!is.na(x) & !is.nan(x)))
-  pow = length(which(x<alpha))/n
-  return(pow)
-}
+n.genes = 500
 
 for (h in 1:nrep) {
-  beta.hat = p.wald = p.lrt = rep(NA, ngenes)
-  for (ind in 1:ngenes) {
-    is.ok = try(load( paste('results/D', case, '/2.', case, '-', ind,'-rep-', h, '.RData', sep='') ))
-    if (exists('mixed.model')) {
-      if (!inherits(mixed.model, 'try-error')){
-        beta.hat[ind] = mixed.model$mle[3]
+  b.hat = matrix(NA, nrow = n.genes, ncol = 3)
+  a.hat = D.hat = s.hat = rep(NA, n.genes)
+  p.wald = p.lrt = lrt.stat = t.ptmixed = rep(NA, n.genes)
+  for (ind in 1:n.genes) {
+    is.ok = try(load( paste('results/2.2.', case, '/2.2.', case, '-', ind,'-rep-', h, '.RData', sep='') ))
+    if (!inherits(is.ok, 'try-error')) {
+      if (!inherits(mixed.model, 'try-error')) {
         if (mixed.model$convergence == 0) {
-          temp = try(summary(mixed.model))
-          if (!inherits(temp, 'try-error')) p.wald[ind] = temp$coefficients[3, 4]
-          logl.h1 = mixed.model$logl
+          # MLE:
+          b.hat[ind,] = mixed.model$mle[1:3]
+          D.hat[ind] = 1+exp(mixed.model$mle[4])
+          a.hat[ind] = 1-exp(mixed.model$mle[5])
+          s.hat[ind] = exp(mixed.model$mle[6])
+          # computing time
+          t.ptmixed[ind] = summary(t.comp)[3]
+          # Wald test:
+          temp = try(summary(mixed.model, silent = T))
+          if (!inherits(temp, 'try-error')) p.wald[ind] = temp$coefficients[2, 4]
+          # likelihood ratio test:
           if (exists('null.model')) {
-            if (!inherits(null.model, 'try-error')){
+            if (!inherits(null.model, 'try-error')) {
               if (null.model$convergence == 0) {
-                logl.h0 = null.model$logl
-                lrt.stat = 2 * (logl.h1 - logl.h0)
-                p.lrt[ind] = pchisq(lrt.stat, df = 1, lower.tail = F)
+                lrt.stat[ind] = 2 * (mixed.model$logl - null.model$logl)
+                if (lrt.stat[ind] >= -1e-2) {
+                  p.lrt[ind] = pchisq(lrt.stat[ind], df = 1, lower.tail = F)
+                }
               }
             }
           }
         }
       }
+      if (exists('mixed.model')) rm('mixed.model')
+      if (exists('null.model')) rm('null.model')
+      if (exists('t.comp')) rm('t.comp')
+      #print(paste(h, ind))
+      if (ind %% 100 == 0) cat(ind)
     }
-    if (exists('mixed.model')) rm('mixed.model')
-    if (exists('null.model')) rm('null.model')
   }
-  rmse[h] = get.rmse(beta.hat, beta.time)
-  fpr.wald[h] = get.fpr(p.wald[type == 'not de'], 0.05)
-  fpr.lrt[h] = get.fpr(p.lrt[type == 'not de'], 0.05)
-  tpr.wald[h] = get.fpr(p.wald[type == 'not de'], 0.05)
-  tpr.lrt[h] = get.fpr(p.lrt[type == 'not de'], 0.05)
+  save.image(paste('results/2.2-aggr/2.2.', case, '-rep', h, '.RData', sep = ''))
 }
