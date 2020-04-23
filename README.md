@@ -7,7 +7,7 @@ ptmixed is as R package that allows to estimate the Poisson-Tweedie generalized 
 This repository contains data and code to reproduce the simulations presented in Signorelli, Spitali and Tsonaka (in review). A flexible model for longitudinal RNA-seq data.
 
 ## How to use ptmixed
-ptmixed is an R package that ![can be downloaded from CRAN](https://cran.r-project.org/web/packages/ptmixed/index.html). This can be done in R through the command install.packages('ptmixed').
+ptmixed is an R package that [can be downloaded from CRAN](https://cran.r-project.org/web/packages/ptmixed/index.html). This can be done in R through the command install.packages('ptmixed').
 
 
 ## Further information
