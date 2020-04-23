@@ -15,4 +15,4 @@ More information on ptmixed can be found in the following pages:
 * [on my personal website](http://mirkosignorelli.wixsite.com/home/software);
 * [in the vignette that illustrates how to use the R package's functions](https://cran.r-project.org/web/packages/ptmixed/vignettes/Overview_functionalities_ptmixed.html).
 
-A read-only mirror of the package's source code is available at https://github.com/cran/ptmixed.
+A read-only mirror of the package's source code is [available here](https://github.com/cran/ptmixed).
