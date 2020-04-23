@@ -3,6 +3,7 @@
 Before running these simulations, create the following subdirectories in your working directory:
 - data
 - results
+- results/gathered
 
 Each simulation comprises 4 scripts that should be run sequentially:
 - the first generates the data (5000 repetitions for each combination of power parameter and sample size)
