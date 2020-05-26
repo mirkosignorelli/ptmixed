@@ -1,7 +1,7 @@
-# Poisson-Tweedie mixed-effects model: a flexible approach for the analysis of longitudinal RNA-seq data
+# Poisson-Tweedie mixed-effects model: flexible modelling of longitudinal overdispersed counts
 
 ## What is ptmixed
-ptmixed is as R package that allows to estimate the Poisson-Tweedie generalized linear mixed model presented in Signorelli, Spitali and Tsonaka (2020, in press). A flexible model for longitudinal RNA-seq data. To appear in *Statistical Modelling*. [arXiv preprint: arXiv:2004.11193](http://arxiv.org/abs/2004.11193)
+ptmixed is as R package that allows to estimate the Poisson-Tweedie generalized linear mixed model presented in Signorelli, Spitali and Tsonaka (2020, in press). Poisson-Tweedie mixed-effects model: a flexible approach for the analysis of longitudinal RNA-seq data. To appear in *Statistical Modelling*. [arXiv preprint: arXiv:2004.11193](http://arxiv.org/abs/2004.11193)
 
 ## About this repository
 This repository contains data and code to reproduce the simulations presented in Signorelli, Spitali and Tsonaka (2020).
