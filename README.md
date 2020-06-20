@@ -1,5 +1,8 @@
 # Poisson-Tweedie mixed-effects model: flexible modelling of longitudinal overdispersed counts
 
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/ptmixed)](https://cran.r-project.org/package/ptmixed)
+[![Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/ptmixed?color=orange)](http://cranlogs.r-pkg.org/badges/grand-total/ptmixed)
+
 <img src="https://user-images.githubusercontent.com/20061736/84284787-f3821f00-ab3c-11ea-85a7-220982ce518c.png" align="right" alt="" width="250" />
 
 ## What is ptmixed
