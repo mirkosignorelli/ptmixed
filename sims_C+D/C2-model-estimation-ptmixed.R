@@ -2,7 +2,6 @@
 ##### Model estimation in sim. C #####
 ######################################
 library(ptmixed)
-library(peakRAM)
 
 # set progressive gene id, 1 to 500 
 # (run this parallelizing to obtain results faster)
@@ -26,17 +25,17 @@ for (case in 1:3) {
                 time = time, y = y, log.offset = log.offset)
     
     # estimate full model
-    max.ram = peakRAM(
-      t.comp <- system.time( mixed.model <- try( 
-        ptmixed(y ~ group + time, id = id, trace = F,
-                data = data.long, npoints = n.agh) ) )
-    )
+    t.comp <- system.time( mixed.model <- try( 
+      ptmixed(y ~ group + time, id = id, 
+              offset = log.offset, trace = F,
+              data = data.long, npoints = n.agh) ) )
     
     # estimate model under the null that time = 0
     if (!inherits(mixed.model, 'try-error')) {
       if (mixed.model$convergence == 0) {
         null.model = try( 
-          ptmixed(y ~ group, id = id, trace = F, hessian = F,
+          ptmixed(y ~ group, id = id, offset = log.offset,
+                  trace = F, hessian = F,
                   data = data.long, npoints = n.agh) )
       }
     }
@@ -45,11 +44,11 @@ for (case in 1:3) {
     filename = paste('results/1.2.', case, '/1.2.', 
                      case, '-', nsub,'-rep-', h, '.RData', sep='')
     if (exists('null.model')) {
-      save(t.comp, max.ram, mixed.model, null.model, 
+      save(t.comp, mixed.model, null.model, 
            file = filename)
     }
     if (!exists('null.model')) {
-      save(t.comp, max.ram, mixed.model, file = filename)
+      save(t.comp, mixed.model, file = filename)
     }
     if (exists('mixed.model')) rm(mixed.model)
     if (exists('null.model')) rm(null.model)
