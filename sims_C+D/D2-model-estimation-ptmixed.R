@@ -24,17 +24,17 @@ for (case in 1:3) {
                 time = time, y = y, log.offset = log.offset)
     
     # estimate full model
-    max.ram = peakRAM(
-      t.comp <- system.time( mixed.model <- try( 
-        ptmixed(y ~ group + time, id = id, trace = F,
+    t.comp <- system.time( mixed.model <- try( 
+      ptmixed(y ~ group + time, id = id, 
+                offset = log.offset, trace = F,
                 data = data.long, npoints = n.agh) ) )
-    )
     
     # estimate model under the null that time = 0
     if (!inherits(mixed.model, 'try-error')) {
       if (mixed.model$convergence == 0) {
         null.model = try( 
-          ptmixed(y ~ time, id = id, trace = F, hessian = F,
+          ptmixed(y ~ time, id = id, offset = log.offset,
+                  trace = F, hessian = F,
                   data = data.long, npoints = n.agh) )
       }
     }
