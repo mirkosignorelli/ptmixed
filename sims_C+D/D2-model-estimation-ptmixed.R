@@ -2,7 +2,6 @@
 ##### Model estimation in sim. D #####
 ######################################
 library(ptmixed)
-library(peakRAM)
 
 # set progressive gene id, 1 to 500 
 # (run this parallelizing to obtain results faster)
@@ -43,11 +42,11 @@ for (case in 1:3) {
     filename = paste('results/2.2.', case, '/2.2.', 
                      case, '-', nsub,'-rep-', h, '.RData', sep='')
     if (exists('null.model')) {
-      save(t.comp, max.ram, mixed.model, null.model, 
+      save(t.comp, mixed.model, null.model, 
            file = filename)
     }
     if (!exists('null.model')) {
-      save(t.comp, max.ram, mixed.model, file = filename)
+      save(t.comp, mixed.model, file = filename)
     }
     if (exists('mixed.model')) rm(mixed.model)
     if (exists('null.model')) rm(null.model)
