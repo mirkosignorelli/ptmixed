@@ -18,9 +18,9 @@ for (h in 1:nrep) {
         if (mixed.model$convergence == 0) {
           # MLE:
           b.hat[ind,] = mixed.model$mle[1:3]
-          D.hat[ind] = 1+exp(mixed.model$mle[4])
-          a.hat[ind] = 1-exp(mixed.model$mle[5])
-          s.hat[ind] = exp(mixed.model$mle[6])
+          D.hat[ind] = mixed.model$mle[4]
+          a.hat[ind] = mixed.model$mle[5]
+          s.hat[ind] = mixed.model$mle[6]
           # computing time
           t.ptmixed[ind] = summary(t.comp)[3]
           # Wald test:
