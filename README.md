@@ -7,7 +7,7 @@
 <img src="https://user-images.githubusercontent.com/20061736/84284787-f3821f00-ab3c-11ea-85a7-220982ce518c.png" align="right" alt="" width="250" />
 
 ## What is ptmixed
-`ptmixed` is an `R` package that allows to estimate the Poisson-Tweedie generalized linear mixed model presented in Signorelli, Spitali and Tsonaka (2020, in press). Poisson-Tweedie mixed-effects model: a flexible approach for the analysis of longitudinal RNA-seq data. *Statistical Modelling*, DOI: 10.1177/1471082X20936017. You can [freely read and download the paper here](https://doi.org/10.1177/1471082X20936017) (the article is published with open access, so you don't need a subscription to access it).
+`ptmixed` is an `R` package that allows to estimate the Poisson-Tweedie generalized linear mixed model presented in Signorelli, Spitali and Tsonaka (2021). Poisson-Tweedie mixed-effects model: a flexible approach for the analysis of longitudinal RNA-seq data. *Statistical Modelling*, 21 (6), 520-545. DOI: 10.1177/1471082X20936017. You can [freely read and download the paper here](https://journals.sagepub.com/doi/pdf/10.1177/1471082X20936017) (the article is published with open access, so you don't need a subscription to access it).
 
 ## About this repository
 This repository contains data and code to reproduce the simulations presented in Signorelli, Spitali and Tsonaka (2020).
